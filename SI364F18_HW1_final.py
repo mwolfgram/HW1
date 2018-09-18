@@ -6,7 +6,7 @@
 #################################
 
 ## List below here, in a comment/comments, the people you worked with on this assignment AND any resources you used to find code (50 point deduction for not doing so). If none, write "None".
-## Resources: I worked with Sam Lu, and also used the assigned readings and lecture code.
+## Resources: I worked with Sam Lu, and also used the assigned readings and lecture code. (samepage.py, views_app.py)
 
 ## [PROBLEM 1] - 150 points
 ## Below is code for one of the simplest possible Flask applications. Edit the code so that once you run this application locally and go to the URL 'http://localhost:5000/class', you see a page that says "Welcome to SI 364!"
@@ -14,7 +14,7 @@
 import requests
 import json
 
-from flask import Flask , request #don't forget request here!!!
+from flask import Flask , request ###
 app = Flask(__name__)
 app.debug = True
 
@@ -35,7 +35,7 @@ def mov(name):
     params = {'media': 'movie', 'term': name}
     data_grab = requests.get(url, params = params)
     json_data = json.loads(data_grab.text)
-    return data_grab.text #change this to json_data??
+    return data_grab.text 
 
 # {
 #  "resultCount":0,
@@ -86,7 +86,7 @@ def double():
 
 ## You should create a form that appears at the route: http://localhost:5000/problem4form
 
-## Submitting the form should result in your seeing the results of the form on the same page.
+## Submitting the form should result in your seeing the results of the form on the same page. #?????
 
 ## What you do for this problem should:
 # - not be an exact repeat of something you did in class
@@ -107,7 +107,7 @@ def prelim():
 <html>
 <h1> car brands and models </h1>
 <body>
-<form action = "/brandmodelinfo" method = "GET">
+<form action = "http://localhost:5000/problem4form" method = "GET">
 <div>
     enter a model year:
     <input type = "text" name = "year" value = "0"
@@ -145,10 +145,10 @@ def prelim():
 </form>
 </html>
 """
-    return f
-
-@app.route('/brandmodelinfo', methods = ['POST', 'GET'])
-def getmakeinfo():
+#     return f
+#
+# @app.route('/brandmodelinfo', methods = ['POST', 'GET'])
+# def getmakeinfo():
     if request.method == 'GET':
         arguments = request.args
         chosen_make = arguments.get("make")
@@ -180,7 +180,11 @@ def getmakeinfo():
                 element = str(model_list[x])
                 big_str += element + "\n"
 
-        return "<h1> {} Models for {}: </h1> {}".format(chosen_make, year, big_str)
+        if len(model_list) == 0:
+            return f
+
+        if len(model_list) != 0:
+            return f + "<h1> {} Models for {}: </h1> {}".format(chosen_make, year, big_str)
 
 
 if __name__ == '__main__':
